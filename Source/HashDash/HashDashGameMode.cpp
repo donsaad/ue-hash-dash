@@ -10,10 +10,15 @@ AHashDashGameMode::AHashDashGameMode()
 	// use our custom PlayerController class
 	PlayerControllerClass = AHashDashPlayerController::StaticClass();
 
+#pragma region HasIssues
 	// set default pawn class to our Blueprinted character
-	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/TopDownCPP/Blueprints/TopDownCharacter"));
-	if (PlayerPawnBPClass.Class != nullptr)
-	{
-		DefaultPawnClass = PlayerPawnBPClass.Class;
-	}
+	//static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/HashDash/Blueprints/BP_HDCharacter"));
+	//if (PlayerPawnBPClass.Class != nullptr)
+	//{
+	//	DefaultPawnClass = PlayerPawnBPClass.Class;
+	//}
+#pragma endregion 
+
+	
+
 }
