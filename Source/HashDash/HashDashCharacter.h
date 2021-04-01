@@ -26,9 +26,10 @@ protected:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	/** Input handlers for axis */
+	/** Player input handlers */
 	void MoveRight(float);
 	void MoveForward(float);
+	void Attack();
 
 private:
 	/** Top down camera */

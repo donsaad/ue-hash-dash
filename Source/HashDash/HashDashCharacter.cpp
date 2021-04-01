@@ -46,6 +46,10 @@ void AHashDashCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 	PlayerInputComponent->BindAxis("MoveRight", this, &AHashDashCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("MoveForward", this, &AHashDashCharacter::MoveForward);
 
+	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &AHashDashCharacter::Attack);
+
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 }
 
 void AHashDashCharacter::Tick(float DeltaSeconds)
@@ -70,5 +74,10 @@ void AHashDashCharacter::MoveForward(float Value)
 		const FRotator YawRotation(0, Controller->GetControlRotation().Yaw, 0);
 		AddMovementInput(FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X), Value);
 	}
+}
+
+void AHashDashCharacter::Attack()
+{
+
 }
 
