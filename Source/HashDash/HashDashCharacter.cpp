@@ -50,6 +50,7 @@ void AHashDashCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 	PlayerInputComponent->BindAxis("Yaw", this, &AHashDashCharacter::Yaw);
 
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &AHashDashCharacter::Attack);
+	PlayerInputComponent->BindAction("Attack", IE_Released, this, &AHashDashCharacter::EndAttack);
 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
@@ -93,7 +94,12 @@ void AHashDashCharacter::Yaw(float Value)
 
 void AHashDashCharacter::Attack()
 {
+	bAttackButtonDown = true;
+}
 
+void AHashDashCharacter::EndAttack()
+{
+	bAttackButtonDown = false;
 }
 
 void AHashDashCharacter::SetMouseRotationInput()
