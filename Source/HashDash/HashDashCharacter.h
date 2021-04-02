@@ -29,7 +29,10 @@ protected:
 	/** Player input handlers */
 	void MoveRight(float);
 	void MoveForward(float);
+	void Yaw(float);
 	void Attack();
+	UPROPERTY(EditAnywhere, Category = "Controls")
+	bool bUseMouseRot;
 
 private:
 	/** Top down camera */
@@ -40,5 +43,6 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
+	void SetMouseRotationInput();
 };
 
