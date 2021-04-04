@@ -14,7 +14,7 @@ AEnemyWaveActor::AEnemyWaveActor()
 
 	NumberOfWaves = 3;
 	UnitsPerWave = 10;
-	FlockingVector = FVector::ZeroVector;
+	DirToPlayer = FVector::ZeroVector;
 	Velocity = FVector::ZeroVector;
 }
 
@@ -32,19 +32,19 @@ void AEnemyWaveActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	for (int32 Index = 0; Index != EnemyArr.Num() - 1; ++Index)
+	for (int32 Index = 0; Index != EnemyArr.Num(); ++Index)
 	{
-		if (EnemyArr[Index] && EnemyArr[Index + 1])
+		if (EnemyArr[Index])
 		{
-			FlockingVector = FVector::ZeroVector;
+			DirToPlayer = FVector::ZeroVector;
 			FVector DistToPlayer = PlayerCharacter->GetActorLocation() - EnemyArr[Index]->GetActorLocation();
 			//FVector DistToOther = EnemyArr[Index + 1]->GetActorLocation() - EnemyArr[Index]->GetActorLocation();
 			//FlockingVector += DistToPlayer.GetSafeNormal() + DistToOther.GetSafeNormal();
 			//FlockingVector /= 2;
-			FlockingVector = DistToPlayer.GetSafeNormal();
-			Velocity = DeltaTime * FlockingVector * 100;
+			DirToPlayer = DistToPlayer.GetSafeNormal();
+			//Velocity = DeltaTime * FlockingVector * 100;
 			//EnemyArr[Index]->GetActorForwardVector()* Velocity.Size();
-			EnemyArr[Index]->GetCapsuleComponent()->AddImpulse(FlockingVector * 6, "", true);
+			EnemyArr[Index]->GetCapsuleComponent()->AddImpulse(DirToPlayer * 9, "", true);
 		}
 	}
 	//FlockingVector /= EnemyArr.Num();

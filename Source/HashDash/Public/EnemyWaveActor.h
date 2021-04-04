@@ -25,7 +25,7 @@ protected:
 		TSubclassOf<class AEnemyCharacter> EnemyToSpawn;
 
 	TArray<class AEnemyCharacter*> EnemyArr;
-	FVector FlockingVector;
+	FVector DirToPlayer;
 	FVector Velocity;
 	class AHashDashCharacter* PlayerCharacter;
 	class APlayerController* PlayerController;
