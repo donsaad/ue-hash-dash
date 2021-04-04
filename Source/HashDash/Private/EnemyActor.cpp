@@ -11,6 +11,7 @@ AEnemyActor::AEnemyActor()
 	Velocity = FVector::ZeroVector;
 	Acceleration = 250;
 	MaxSpeed = 300;
+	Health = 100;
 }
 
 // Called when the game starts or when spawned
@@ -24,14 +25,13 @@ void AEnemyActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	Velocity += GetActorForwardVector() * DeltaTime * Acceleration;
+	//Velocity += GetActorForwardVector() * DeltaTime * Acceleration;
 
-	if (Velocity.Size() > MaxSpeed) 
-	{
-		Velocity = Velocity.GetSafeNormal() * MaxSpeed;
-	}
+	//if (Velocity.Size() > MaxSpeed) 
+	//{
+	//	Velocity = Velocity.GetSafeNormal() * MaxSpeed;
+	//}
 
-	SetActorLocation(GetActorLocation() + Velocity * DeltaTime);
-
+	//SetActorLocation(GetActorLocation() + Velocity * DeltaTime);
 }
 
