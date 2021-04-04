@@ -31,7 +31,7 @@ void AEnemyWaveActor::BeginPlay()
 void AEnemyWaveActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
+
 	for (int32 Index = 0; Index != EnemyArr.Num(); ++Index)
 	{
 		if (EnemyArr[Index])
@@ -44,7 +44,13 @@ void AEnemyWaveActor::Tick(float DeltaTime)
 			DirToPlayer = DistToPlayer.GetSafeNormal();
 			//Velocity = DeltaTime * FlockingVector * 100;
 			//EnemyArr[Index]->GetActorForwardVector()* Velocity.Size();
-			EnemyArr[Index]->GetCapsuleComponent()->AddImpulse(DirToPlayer * 9, "", true);
+			EnemyArr[Index]->GetCapsuleComponent()->AddImpulse(DirToPlayer * 1000 * DeltaTime, "", true);
+			if (AController* Acont = EnemyArr[Index]->Controller)
+			{
+				FRotator YawRotation(0, Acont->GetControlRotation().Yaw, 0);
+				EnemyArr[Index]->SetActorRotation(YawRotation);
+				UE_LOG(LogTemp, Warning, TEXT("rot"));
+			}
 		}
 	}
 	//FlockingVector /= EnemyArr.Num();
