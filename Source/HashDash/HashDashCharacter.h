@@ -37,14 +37,17 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Controls")
 	bool bUseMouseRot;
 
-	UStaticMeshComponent* Weapon;
-
 	// UFUNCTIONSZZZZZZ
 	UFUNCTION(BlueprintCallable)
 		void OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	void SetMouseRotationInput();
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Health")
+	float Health;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Health")
+	float MaxHealth;
+
 
 private:
 	/** Top down camera */
@@ -58,6 +61,6 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Controls", meta = (AllowPrivateAccess = "true"))
 	bool bAttackButtonDown;
 
-	float Health;
+
 };
 

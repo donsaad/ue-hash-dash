@@ -12,6 +12,14 @@ class AHashDashGameMode : public AGameModeBase
 
 public:
 	AHashDashGameMode();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "HUD")
+	TSubclassOf<class UUserWidget> MainWidgetClass;
+	UUserWidget* MainWidget;
+
+protected:
+	virtual void BeginPlay() override;
+
 };
 
 

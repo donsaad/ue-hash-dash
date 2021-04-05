@@ -41,6 +41,7 @@ AHashDashCharacter::AHashDashCharacter()
 
 	bUseMouseRot = false;
 	Health = 100;
+	MaxHealth = 120;
 }
 
 void AHashDashCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -62,7 +63,7 @@ void AHashDashCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//Weapon = FindComponentByClass<UStaticMeshComponent>();
+	//	UStaticMeshComponent* Weapon = FindComponentByClass<UStaticMeshComponent>();
 	//if (Weapon)
 	//{
 	//	Weapon->OnComponentBeginOverlap.AddDynamic(this, &AHashDashCharacter::OnWeaponBeginOverlap);
