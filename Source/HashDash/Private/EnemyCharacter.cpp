@@ -27,7 +27,15 @@ void AEnemyCharacter::BeginPlay()
 void AEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
+	if (Health < 0) 
+	{
+		Destroy();
+	}
+}
+
+void AEnemyCharacter::TakeDamage(float Damage)
+{
+	Health -= Damage;
 }
 
 // Called to bind functionality to input

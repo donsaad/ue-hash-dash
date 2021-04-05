@@ -25,16 +25,24 @@ public:
 protected:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	virtual void BeginPlay() override;
 	/** Player input handlers */
 	void MoveRight(float);
 	void MoveForward(float);
 	void Yaw(float);
 	void Attack();
 	void EndAttack();
+
 	UPROPERTY(EditAnywhere, Category = "Controls")
 	bool bUseMouseRot;
-	
+
+	UStaticMeshComponent* Weapon;
+
+	// UFUNCTIONSZZZZZZ
+	UFUNCTION(BlueprintCallable)
+		void OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+			int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 private:
 	/** Top down camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))

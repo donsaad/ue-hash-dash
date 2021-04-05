@@ -5,6 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "EnemyCharacter.h"
 
 AHashDashCharacter::AHashDashCharacter()
 {
@@ -56,6 +57,17 @@ void AHashDashCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 }
 
+void AHashDashCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	//Weapon = FindComponentByClass<UStaticMeshComponent>();
+	//if (Weapon)
+	//{
+	//	Weapon->OnComponentBeginOverlap.AddDynamic(this, &AHashDashCharacter::OnWeaponBeginOverlap);
+	//}
+}
+
 void AHashDashCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
@@ -100,6 +112,16 @@ void AHashDashCharacter::Attack()
 void AHashDashCharacter::EndAttack()
 {
 	bAttackButtonDown = false;
+}
+
+void AHashDashCharacter::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	AEnemyCharacter* Enemy = Cast<AEnemyCharacter>(OtherActor);
+	if (Enemy) 
+	{
+		Enemy->TakeDamage(25);
+		UE_LOG(LogTemp, Warning, TEXT("took damage"));
+	}
 }
 
 void AHashDashCharacter::SetMouseRotationInput()

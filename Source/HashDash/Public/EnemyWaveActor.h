@@ -29,6 +29,7 @@ protected:
 	FVector Velocity;
 	class AHashDashCharacter* PlayerCharacter;
 	class APlayerController* PlayerController;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

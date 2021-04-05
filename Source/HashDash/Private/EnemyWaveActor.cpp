@@ -32,27 +32,27 @@ void AEnemyWaveActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	for (int32 Index = 0; Index != EnemyArr.Num(); ++Index)
-	{
-		if (EnemyArr[Index])
-		{
-			DirToPlayer = FVector::ZeroVector;
-			FVector DistToPlayer = PlayerCharacter->GetActorLocation() - EnemyArr[Index]->GetActorLocation();
-			//FVector DistToOther = EnemyArr[Index + 1]->GetActorLocation() - EnemyArr[Index]->GetActorLocation();
-			//FlockingVector += DistToPlayer.GetSafeNormal() + DistToOther.GetSafeNormal();
-			//FlockingVector /= 2;
-			DirToPlayer = DistToPlayer.GetSafeNormal();
-			//Velocity = DeltaTime * FlockingVector * 100;
-			//EnemyArr[Index]->GetActorForwardVector()* Velocity.Size();
-			EnemyArr[Index]->GetCapsuleComponent()->AddImpulse(DirToPlayer * 1000 * DeltaTime, "", true);
-			if (AController* Acont = EnemyArr[Index]->Controller)
-			{
-				FRotator YawRotation(0, Acont->GetControlRotation().Yaw, 0);
-				EnemyArr[Index]->SetActorRotation(YawRotation);
-				UE_LOG(LogTemp, Warning, TEXT("rot"));
-			}
-		}
-	}
+	//for (int32 Index = 0; Index != EnemyArr.Num(); ++Index)
+	//{
+	//	if (EnemyArr[Index])
+	//	{
+	//		DirToPlayer = FVector::ZeroVector;
+	//		FVector DistToPlayer = PlayerCharacter->GetActorLocation() - EnemyArr[Index]->GetActorLocation();
+	//		FVector DistToOther = EnemyArr[Index + 1]->GetActorLocation() - EnemyArr[Index]->GetActorLocation();
+	//		FlockingVector += DistToPlayer.GetSafeNormal() + DistToOther.GetSafeNormal();
+	//		FlockingVector /= 2;
+	//		DirToPlayer = DistToPlayer.GetSafeNormal();
+	//		Velocity = DeltaTime * FlockingVector * 100;
+	//		EnemyArr[Index]->GetActorForwardVector()* Velocity.Size();
+	//		EnemyArr[Index]->GetCapsuleComponent()->AddImpulse(DirToPlayer * 1000 * DeltaTime, "", true);
+	//		if (AController* Acont = EnemyArr[Index]->Controller)
+	//		{
+	//			FRotator YawRotation(0, Acont->GetControlRotation().Yaw, 0);
+	//			EnemyArr[Index]->SetActorRotation(YawRotation);
+	//			UE_LOG(LogTemp, Warning, TEXT("rot"));
+	//		}
+	//	}
+	//}
 	//FlockingVector /= EnemyArr.Num();
 	//for (auto& Enemy : EnemyArr) 
 	//{
