@@ -27,7 +27,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health")
 		float Health;
 
-	void MoveForward(float);
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

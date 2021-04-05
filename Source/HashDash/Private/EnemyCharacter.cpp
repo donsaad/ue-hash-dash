@@ -23,15 +23,6 @@ void AEnemyCharacter::BeginPlay()
 	
 }
 
-void AEnemyCharacter::MoveForward(float Value)
-{
-	if ((Controller != nullptr) && (Value != 0.0f))
-	{
-		const FRotator YawRotation(0, Controller->GetControlRotation().Yaw, 0);
-		AddMovementInput(FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X), Value);
-	}
-}
-
 // Called every frame
 void AEnemyCharacter::Tick(float DeltaTime)
 {
