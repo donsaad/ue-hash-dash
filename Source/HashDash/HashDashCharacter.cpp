@@ -40,6 +40,7 @@ AHashDashCharacter::AHashDashCharacter()
 	PrimaryActorTick.bStartWithTickEnabled = true;
 
 	bUseMouseRot = false;
+	Health = 100;
 }
 
 void AHashDashCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -75,6 +76,12 @@ void AHashDashCharacter::Tick(float DeltaSeconds)
 	{
 		SetMouseRotationInput();
 	}
+}
+
+void AHashDashCharacter::TakeDamage(float Damage)
+{
+	Health -= Damage;
+	UE_LOG(LogTemp, Warning, TEXT("player is hit"));
 }
 
 void AHashDashCharacter::MoveRight(float Value)
@@ -117,7 +124,7 @@ void AHashDashCharacter::EndAttack()
 void AHashDashCharacter::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	AEnemyCharacter* Enemy = Cast<AEnemyCharacter>(OtherActor);
-	if (Enemy) 
+	if (Enemy)
 	{
 		Enemy->TakeDamage(25);
 		UE_LOG(LogTemp, Warning, TEXT("took damage"));
