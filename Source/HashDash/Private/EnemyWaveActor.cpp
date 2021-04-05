@@ -1,6 +1,6 @@
 
 #include "EnemyWaveActor.h"
-#include "HashDash/HashDashCharacter.h"
+#include "HashDashCharacter.h"
 #include "EnemyCharacter.h"
 #include "Kismet\GameplayStatics.h"
 #include "GameFramework/CharacterMovementComponent.h"

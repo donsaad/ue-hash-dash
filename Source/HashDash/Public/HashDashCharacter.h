@@ -32,7 +32,7 @@ protected:
 	void MoveForward(float);
 	void Yaw(float);
 	void Attack();
-	void EndAttack();
+	void Dash();
 
 	UPROPERTY(EditAnywhere, Category = "Controls")
 	bool bUseMouseRot;
@@ -58,8 +58,8 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Controls", meta = (AllowPrivateAccess = "true"))
-	bool bAttackButtonDown;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Controls", meta = (AllowPrivateAccess = "true"))
+	bool bIsAttacking;
 
 
 };

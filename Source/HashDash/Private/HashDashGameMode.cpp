@@ -2,7 +2,7 @@
 #include "HashDashGameMode.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Blueprint/UserWidget.h"
-#include "HashDash/Public/GameHUD.h"
+#include "GameHUD.h"
 
 AHashDashGameMode::AHashDashGameMode()
 {

@@ -38,8 +38,9 @@ AHashDashCharacter::AHashDashCharacter()
 
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
-
+	/* Use mouse rotation as input instead of WASD */
 	bUseMouseRot = false;
+	/* Player health attributes */
 	Health = 100;
 	MaxHealth = 120;
 }
@@ -47,14 +48,14 @@ AHashDashCharacter::AHashDashCharacter()
 void AHashDashCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	/* Binding Movement Axis */
 	PlayerInputComponent->BindAxis("MoveRight", this, &AHashDashCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("MoveForward", this, &AHashDashCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("Yaw", this, &AHashDashCharacter::Yaw);
 
+	/* Binding Player Actions */
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &AHashDashCharacter::Attack);
-	PlayerInputComponent->BindAction("Attack", IE_Released, this, &AHashDashCharacter::EndAttack);
-
+	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AHashDashCharacter::Dash);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 }
@@ -88,7 +89,7 @@ void AHashDashCharacter::TakeDamage(float Damage)
 void AHashDashCharacter::MoveRight(float Value)
 {
 	// If not using mouse Rot dont add horizontal input
-	if (!bUseMouseRot && (Controller != nullptr) && (Value != 0.0f))
+	if (!bIsAttacking && !bUseMouseRot && (Controller != nullptr) && (Value != 0.0f))
 	{
 		const FRotator YawRotation(0, Controller->GetControlRotation().Yaw, 0);
 		AddMovementInput(FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y), Value);
@@ -97,7 +98,7 @@ void AHashDashCharacter::MoveRight(float Value)
 
 void AHashDashCharacter::MoveForward(float Value)
 {
-	if ((Controller != nullptr) && (Value != 0.0f))
+	if (!bIsAttacking && (Controller != nullptr) && (Value != 0.0f))
 	{
 		const FRotator YawRotation(0, Controller->GetControlRotation().Yaw, 0);
 		AddMovementInput(FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X), Value);
@@ -114,27 +115,24 @@ void AHashDashCharacter::Yaw(float Value)
 
 void AHashDashCharacter::Attack()
 {
-	bAttackButtonDown = true;
+	bIsAttacking = true;
 }
 
-void AHashDashCharacter::EndAttack()
+void AHashDashCharacter::Dash()
 {
-	bAttackButtonDown = false;
+	GetCharacterMovement()->AddImpulse(GetActorForwardVector() * 4000, true);
 }
 
 void AHashDashCharacter::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	AHashDashCharacter* temp = Cast<AHashDashCharacter>(OtherActor);
-	if (temp)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("%s"), *temp->GetName()));
+	// only apply damage while attacking 
+	if (!bIsAttacking) 
 		return;
-	}
 	AEnemyCharacter* Enemy = Cast<AEnemyCharacter>(OtherActor);
 	if (Enemy)
 	{
 		Enemy->TakeDamage(25);
-		UE_LOG(LogTemp, Warning, TEXT("took damage"));
+		UE_LOG(LogTemp, Warning, TEXT("enemy took damage"));
 	}
 }
 

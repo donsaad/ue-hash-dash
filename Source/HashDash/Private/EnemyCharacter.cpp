@@ -2,7 +2,7 @@
 
 
 #include "EnemyCharacter.h"
-#include "HashDash/HashDashCharacter.h"
+#include "HashDashCharacter.h"
 #include "Components/CapsuleComponent.h"
 
 // Sets default values
@@ -43,6 +43,7 @@ void AEnemyCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (Health < 0) 
 	{
+	// TODO: death
 		Destroy();
 	}
 }
