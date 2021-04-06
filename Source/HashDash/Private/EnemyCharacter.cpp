@@ -8,14 +8,11 @@
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Velocity = FVector::ZeroVector;
-	Acceleration = 250;
-	MaxSpeed = 300;
 	Health = 100;
-
+	bIsDead = false;
 }
 
 // Called when the game starts or when spawned
@@ -34,17 +31,25 @@ void AEnemyCharacter::OnEnemyBeginOverlap(UPrimitiveComponent* OverlappedCompone
 	{
 		Player->TakeDamage(1.5f);
 	}
-	
+
+}
+
+void AEnemyCharacter::DestroySelf()
+{
+	Destroy();
 }
 
 // Called every frame
 void AEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (Health < 0) 
+	if (!bIsDead)
 	{
-	// TODO: death
-		Destroy();
+		if (Health < 0)
+		{
+			bIsDead = true;
+			GetWorld()->GetTimerManager().SetTimer(DestroyTimerHandle, this, &AEnemyCharacter::DestroySelf, 1);
+		}
 	}
 }
 

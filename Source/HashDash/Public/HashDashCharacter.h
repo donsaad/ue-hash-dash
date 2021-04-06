@@ -34,8 +34,10 @@ protected:
 	void Attack();
 	void Dash();
 
-	UPROPERTY(EditAnywhere, Category = "Controls")
+	UPROPERTY(EditDefaultsOnly, Category = "Movement Controls")
 	bool bUseMouseRot;
+	UPROPERTY(EditDefaultsOnly, Category = "Movement Controls")
+	float DashPower;
 
 	// UFUNCTIONSZZZZZZ
 	UFUNCTION(BlueprintCallable)
@@ -61,6 +63,7 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Controls", meta = (AllowPrivateAccess = "true"))
 	bool bIsAttacking;
 
+	float DeltaTime;
 
 };
 

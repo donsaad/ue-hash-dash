@@ -40,7 +40,8 @@ AHashDashCharacter::AHashDashCharacter()
 	PrimaryActorTick.bStartWithTickEnabled = true;
 	/* Use mouse rotation as input instead of WASD */
 	bUseMouseRot = false;
-	/* Player health attributes */
+	DashPower = 4000;
+	/* Init player health attributes */
 	Health = 100;
 	MaxHealth = 120;
 }
@@ -74,6 +75,7 @@ void AHashDashCharacter::BeginPlay()
 void AHashDashCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+	DeltaTime = DeltaSeconds;
 	if (bUseMouseRot)
 	{
 		SetMouseRotationInput();
@@ -120,13 +122,13 @@ void AHashDashCharacter::Attack()
 
 void AHashDashCharacter::Dash()
 {
-	GetCharacterMovement()->AddImpulse(GetActorForwardVector() * 4000, true);
+	GetCharacterMovement()->AddImpulse(GetActorForwardVector() * DashPower, true);
 }
 
 void AHashDashCharacter::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	// only apply damage while attacking 
-	if (!bIsAttacking) 
+	if (!bIsAttacking)
 		return;
 	AEnemyCharacter* Enemy = Cast<AEnemyCharacter>(OtherActor);
 	if (Enemy)

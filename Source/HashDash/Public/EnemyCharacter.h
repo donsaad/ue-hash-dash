@@ -19,23 +19,23 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	FVector Velocity;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Movement")
-		float Acceleration;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Movement")
-		float MaxSpeed;
+	FTimerHandle DestroyTimerHandle;
+
+	/* UPROPERTIES */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health")
 		float Health;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health")
+		bool bIsDead;
+
 
 	UFUNCTION(BlueprintCallable)
 		void OnEnemyBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+		void DestroySelf();
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void TakeDamage(float Damage);
 };
