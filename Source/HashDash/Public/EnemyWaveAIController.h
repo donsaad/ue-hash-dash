@@ -33,10 +33,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Enemy Wave Setup")
 		int32 NumberOfWaves;
 	UPROPERTY(EditDefaultsOnly, Category = "Enemy Wave Setup")
-		int32 EnemyUnitsPerWave;
+		int32 NumOfEnemiesToSpawn;
 
 protected:
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	TArray<AActor*> CurrentEnemyList;
 };

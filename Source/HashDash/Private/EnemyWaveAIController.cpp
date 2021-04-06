@@ -3,13 +3,19 @@
 
 #include "EnemyWaveAIController.h"
 #include "AIModule\Classes\BehaviorTree\BlackboardComponent.h"
+#include "Kismet\GameplayStatics.h"
+#include "EnemyCharacter.h"
 
+
+/*
+*	Worst Class Logic Ever!!
+*/
 AEnemyWaveAIController::AEnemyWaveAIController()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
 	NumberOfWaves = 2;
-	EnemyUnitsPerWave = 15;
+	NumOfEnemiesToSpawn = 15;
 }
 
 void AEnemyWaveAIController::BeginPlay()
@@ -18,7 +24,8 @@ void AEnemyWaveAIController::BeginPlay()
 	if (BlackboardAsset)
 	{
 		UseBlackboard(BlackboardAsset, BlackBoardComp);
-		BlackBoardComp->SetValueAsInt("EnemyUnitsPerWave", EnemyUnitsPerWave);
+		BlackBoardComp->SetValueAsInt("EnemyUnitsPerWave", NumOfEnemiesToSpawn); // WTF
+		BlackBoardComp->SetValueAsInt("EnemyWaves", NumberOfWaves);
 	}
 	else
 	{
@@ -37,5 +44,8 @@ void AEnemyWaveAIController::BeginPlay()
 void AEnemyWaveAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	//if (NumOfEnemiesToSpawn == 0 && CurrentEnemyList.Num() == 0)
+	//{
+	//	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemyCharacter::StaticClass(), CurrentEnemyList);
+	//}
 }

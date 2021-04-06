@@ -43,7 +43,7 @@ AHashDashCharacter::AHashDashCharacter()
 	DashPower = 4000;
 	/* Init player health attributes */
 	Health = 100;
-	MaxHealth = 120;
+	MaxHealth = 100;
 }
 
 void AHashDashCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -56,6 +56,7 @@ void AHashDashCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 
 	/* Binding Player Actions */
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &AHashDashCharacter::Attack);
+	PlayerInputComponent->BindAction("HeavyAttack", IE_Pressed, this, &AHashDashCharacter::HeavyAttack);
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AHashDashCharacter::Dash);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
@@ -79,6 +80,10 @@ void AHashDashCharacter::Tick(float DeltaSeconds)
 	if (bUseMouseRot)
 	{
 		SetMouseRotationInput();
+	}
+	if (Health < MaxHealth / 2) 
+	{
+		// TODO: spawn health pack
 	}
 }
 
@@ -118,6 +123,11 @@ void AHashDashCharacter::Yaw(float Value)
 void AHashDashCharacter::Attack()
 {
 	bIsAttacking = true;
+}
+
+void AHashDashCharacter::HeavyAttack()
+{
+	
 }
 
 void AHashDashCharacter::Dash()

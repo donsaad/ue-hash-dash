@@ -32,6 +32,7 @@ protected:
 	void MoveForward(float);
 	void Yaw(float);
 	void Attack();
+	void HeavyAttack();
 	void Dash();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Movement Controls")
