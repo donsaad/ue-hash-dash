@@ -26,7 +26,8 @@ protected:
 		float Health;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health")
 		bool bIsDead;
-
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health")
+		float HealthPercentage;
 
 	UFUNCTION(BlueprintCallable)
 		void OnEnemyBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
@@ -40,4 +41,6 @@ public:
 	void TakeDamage(float Damage);
 	class AEnemyAIController* AIController;
 	//class UBlackboardComponent* BlackboardComp;
+	class UWidgetComponent* HealthWidgetComp;
+	class UHealthBarUserWidget* HealthBarUI;
 };

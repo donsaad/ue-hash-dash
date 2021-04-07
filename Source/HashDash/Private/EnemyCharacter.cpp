@@ -1,4 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "EnemyCharacter.h"
@@ -8,15 +7,17 @@
 //#include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "EnemyAIController.h"
 //#include "Kismet\GameplayStatics.h"
+#include "Components\WidgetComponent.h"
+#include "HealthBarUserWidget.h"
 
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	Health = 100;
+	HealthPercentage = 100;
 	bIsDead = false;
 }
 
@@ -33,6 +34,15 @@ void AEnemyCharacter::BeginPlay()
 	//{
 	//	BlackboardComp = UAIBlueprintHelperLibrary::GetBlackboard(AIController->GetPawn()); // cant get BB todo solve
 	//}
+	HealthWidgetComp = FindComponentByClass<UWidgetComponent>();
+	if (HealthWidgetComp)
+	{
+		HealthBarUI = Cast<UHealthBarUserWidget>(HealthWidgetComp->GetUserWidgetObject());
+		if (HealthBarUI)
+		{
+			HealthBarUI->EnemyCharacter = this;
+		}
+	}
 }
 
 void AEnemyCharacter::OnEnemyBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -69,5 +79,6 @@ void AEnemyCharacter::Tick(float DeltaTime)
 void AEnemyCharacter::TakeDamage(float Damage)
 {
 	Health -= Damage;
+	HealthPercentage = Health / 100;
 }
 
