@@ -20,7 +20,6 @@ protected:
 	virtual void BeginPlay() override;
 
 	class AEnemyWaveAIController* AIController;
-	TArray<AActor*> CurrentEnemyList;
 
 public:	
 	// Called every frame

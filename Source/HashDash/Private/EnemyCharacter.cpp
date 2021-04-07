@@ -56,6 +56,7 @@ void AEnemyCharacter::Tick(float DeltaTime)
 	{
 		if (Health < 0)
 		{
+			GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 			bIsDead = true;
 			GetWorld()->GetTimerManager().SetTimer(DestroyTimerHandle, this, &AEnemyCharacter::DestroySelf, 1);
 			BlackboardComp->SetValueAsInt("CurrentEnemyCount", BlackboardComp->GetValueAsInt("CurrentEnemyCount") - 1);

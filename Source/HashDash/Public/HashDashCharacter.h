@@ -50,6 +50,8 @@ protected:
 	float Health;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Health")
 	float MaxHealth;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health")
+	float WeaponDamage;
 
 
 private:
@@ -63,6 +65,12 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Controls", meta = (AllowPrivateAccess = "true"))
 	bool bIsAttacking;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Controls", meta = (AllowPrivateAccess = "true"))
+	bool bIsJumping;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Controls", meta = (AllowPrivateAccess = "true"))
+	bool bIsHeavyAttacking;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Controls", meta = (AllowPrivateAccess = "true"))
+	bool bDashing;
 
 	float DeltaTime;
 

@@ -7,6 +7,7 @@
 #include "EnemyCharacter.h"
 #include "EnemyWaveAIController.h"
 #include "AIModule\Classes\BehaviorTree\BlackboardComponent.h"
+#include "HashDashGameMode.h"
 
 // Sets default values
 AEnemyWaveManager::AEnemyWaveManager()
@@ -27,10 +28,13 @@ void AEnemyWaveManager::BeginPlay()
 void AEnemyWaveManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (AIController->BlackBoardComp->GetValueAsInt("CurrentEnemyCount") == 0)
+	if (AIController->BlackBoardComp->GetValueAsInt("CurrentEnemyCount") == 0 
+		&& AIController->BlackBoardComp->GetValueAsInt("EnemyUnitsPerWave") == 0)
 	{
 		AIController->BlackBoardComp->SetValueAsInt("EnemyWaves", 1);
 		AIController->BlackBoardComp->SetValueAsInt("EnemyUnitsPerWave", 15);
+		AHashDashGameMode* GameMode = Cast<AHashDashGameMode>(GetWorld()->GetAuthGameMode());
+		GameMode->EndGame();
 	}
 
 }

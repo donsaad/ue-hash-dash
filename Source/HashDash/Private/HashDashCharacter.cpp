@@ -41,9 +41,14 @@ AHashDashCharacter::AHashDashCharacter()
 	/* Use mouse rotation as input instead of WASD */
 	bUseMouseRot = false;
 	DashPower = 4000;
-	/* Init player health attributes */
+	/* Init player attributes */
 	Health = 100;
 	MaxHealth = 100;
+	WeaponDamage = 25;
+	bIsAttacking = false;
+	bIsHeavyAttacking = false;
+	bDashing = false;
+	bIsJumping = false;
 }
 
 void AHashDashCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -81,7 +86,7 @@ void AHashDashCharacter::Tick(float DeltaSeconds)
 	{
 		SetMouseRotationInput();
 	}
-	if (Health < MaxHealth / 2) 
+	if (Health < MaxHealth / 2)
 	{
 		// TODO: spawn health pack
 	}
@@ -96,7 +101,7 @@ void AHashDashCharacter::TakeDamage(float Damage)
 void AHashDashCharacter::MoveRight(float Value)
 {
 	// If not using mouse Rot dont add horizontal input
-	if (!bIsAttacking && !bUseMouseRot && (Controller != nullptr) && (Value != 0.0f))
+	if (!bIsAttacking && !bIsHeavyAttacking && !bUseMouseRot && (Controller != nullptr) && (Value != 0.0f))
 	{
 		const FRotator YawRotation(0, Controller->GetControlRotation().Yaw, 0);
 		AddMovementInput(FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y), Value);
@@ -105,7 +110,7 @@ void AHashDashCharacter::MoveRight(float Value)
 
 void AHashDashCharacter::MoveForward(float Value)
 {
-	if (!bIsAttacking && (Controller != nullptr) && (Value != 0.0f))
+	if (!bIsAttacking && !bIsHeavyAttacking && (Controller != nullptr) && (Value != 0.0f))
 	{
 		const FRotator YawRotation(0, Controller->GetControlRotation().Yaw, 0);
 		AddMovementInput(FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X), Value);
@@ -127,12 +132,19 @@ void AHashDashCharacter::Attack()
 
 void AHashDashCharacter::HeavyAttack()
 {
-	
+	if (bIsJumping)
+	{
+		bIsHeavyAttacking = true;
+	}
 }
 
 void AHashDashCharacter::Dash()
 {
-	GetCharacterMovement()->AddImpulse(GetActorForwardVector() * DashPower, true);
+	if (!bIsJumping)
+	{
+		bDashing = true;
+		GetCharacterMovement()->AddImpulse(GetActorForwardVector() * DashPower, true);
+	}
 }
 
 void AHashDashCharacter::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -143,7 +155,7 @@ void AHashDashCharacter::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedCom
 	AEnemyCharacter* Enemy = Cast<AEnemyCharacter>(OtherActor);
 	if (Enemy)
 	{
-		Enemy->TakeDamage(25);
+		Enemy->TakeDamage(WeaponDamage);
 		UE_LOG(LogTemp, Warning, TEXT("enemy took damage"));
 	}
 }
