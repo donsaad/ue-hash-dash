@@ -33,6 +33,9 @@ protected:
 	void Yaw(float);
 	void Attack();
 	void HeavyAttack();
+
+	void DealHeavyDamage();
+
 	void Dash();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Movement Controls")
@@ -50,8 +53,10 @@ protected:
 	float Health;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Health")
 	float MaxHealth;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Combat")
 	float WeaponDamage;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Combat")
+	float HeavyAttackRadius;
 
 
 private:

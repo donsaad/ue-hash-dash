@@ -6,6 +6,7 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "EnemyCharacter.h"
+#include "HashDash/HashDash.h"
 
 AHashDashCharacter::AHashDashCharacter()
 {
@@ -45,6 +46,7 @@ AHashDashCharacter::AHashDashCharacter()
 	Health = 100;
 	MaxHealth = 100;
 	WeaponDamage = 25;
+	HeavyAttackRadius = 900;
 	bIsAttacking = false;
 	bIsHeavyAttacking = false;
 	bDashing = false;
@@ -88,14 +90,13 @@ void AHashDashCharacter::Tick(float DeltaSeconds)
 	}
 	if (Health < MaxHealth / 2)
 	{
-		// TODO: spawn health pack
+		// TODO: spawn health kit
 	}
 }
 
 void AHashDashCharacter::TakeDamage(float Damage)
 {
 	Health -= Damage;
-	UE_LOG(LogTemp, Warning, TEXT("player is hit"));
 }
 
 void AHashDashCharacter::MoveRight(float Value)
@@ -135,6 +136,25 @@ void AHashDashCharacter::HeavyAttack()
 	if (bIsJumping)
 	{
 		bIsHeavyAttacking = true;
+		DealHeavyDamage();
+	}
+}
+
+void AHashDashCharacter::DealHeavyDamage()
+{
+	TArray<FOverlapResult> OutOverlaps;
+	GetWorld()->OverlapMultiByChannel(OutOverlaps, GetActorLocation(), FQuat::Identity,
+		ECC_GameTraceChannel3, FCollisionShape::MakeSphere(HeavyAttackRadius));
+	for (FOverlapResult& Res : OutOverlaps)
+	{
+		if (Res.Actor.IsValid())
+		{
+			AEnemyCharacter* Enemy = Cast<AEnemyCharacter>(Res.Actor);
+			if (Enemy)
+			{
+				Enemy->TakeDamage(WeaponDamage * 1.2f);
+			}
+		}
 	}
 }
 
@@ -156,7 +176,6 @@ void AHashDashCharacter::OnWeaponBeginOverlap(UPrimitiveComponent* OverlappedCom
 	if (Enemy)
 	{
 		Enemy->TakeDamage(WeaponDamage);
-		UE_LOG(LogTemp, Warning, TEXT("enemy took damage"));
 	}
 }
 

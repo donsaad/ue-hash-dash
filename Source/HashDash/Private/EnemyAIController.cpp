@@ -16,12 +16,7 @@ void AEnemyAIController::BeginPlay()
 	Super::BeginPlay();
 	if (BlackboardAsset)
 	{
-		bool b = UseBlackboard(BlackboardAsset, BlackBoardComp);
-		if (b)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("success BB")));
-
-		}
+		UseBlackboard(BlackboardAsset, BlackBoardComp);
 		AHashDashCharacter* PlayerCharacter = Cast<AHashDashCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 		BlackBoardComp->SetValueAsObject("PlayerCharacter", PlayerCharacter);
 	}

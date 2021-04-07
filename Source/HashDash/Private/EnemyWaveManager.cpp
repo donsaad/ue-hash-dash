@@ -28,14 +28,14 @@ void AEnemyWaveManager::BeginPlay()
 void AEnemyWaveManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (AIController->BlackBoardComp->GetValueAsInt("CurrentEnemyCount") == 0 
-		&& AIController->BlackBoardComp->GetValueAsInt("EnemyUnitsPerWave") == 0)
-	{
-		AIController->BlackBoardComp->SetValueAsInt("EnemyWaves", 1);
-		AIController->BlackBoardComp->SetValueAsInt("EnemyUnitsPerWave", 15);
-		AHashDashGameMode* GameMode = Cast<AHashDashGameMode>(GetWorld()->GetAuthGameMode());
-		GameMode->EndGame();
-	}
+	//if (AIController->BlackBoardComp->GetValueAsInt("CurrentEnemyCount") == 0 
+	//	&& AIController->BlackBoardComp->GetValueAsInt("EnemyUnitsPerWave") == 0)
+	//{
+	//	AIController->BlackBoardComp->SetValueAsInt("EnemyWaves", 1);
+	//	AIController->BlackBoardComp->SetValueAsInt("EnemyUnitsPerWave", 15);
+	//	AHashDashGameMode* GameMode = Cast<AHashDashGameMode>(GetWorld()->GetAuthGameMode());
+	//	GameMode->EndGame();
+	//}
 
 }
 
