@@ -35,12 +35,13 @@ protected:
 	void HeavyAttack();
 
 	void DealHeavyDamage();
+	FTimerHandle HeavyAttackTimerHandle;
 
 	void Dash();
 
-	UPROPERTY(EditDefaultsOnly, Category = "Movement Controls")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement Controls")
 	bool bUseMouseRot;
-	UPROPERTY(EditDefaultsOnly, Category = "Movement Controls")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement Controls")
 	float DashPower;
 
 	// UFUNCTIONSZZZZZZ
@@ -53,7 +54,7 @@ protected:
 	float Health;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Health")
 	float MaxHealth;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Combat")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Combat")
 	float WeaponDamage;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Combat")
 	float HeavyAttackRadius;

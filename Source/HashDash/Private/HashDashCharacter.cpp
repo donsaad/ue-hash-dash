@@ -136,7 +136,7 @@ void AHashDashCharacter::HeavyAttack()
 	if (bIsJumping)
 	{
 		bIsHeavyAttacking = true;
-		DealHeavyDamage();
+		GetWorld()->GetTimerManager().SetTimer(HeavyAttackTimerHandle, this, &AHashDashCharacter::DealHeavyDamage, 1);
 	}
 }
 
@@ -152,7 +152,7 @@ void AHashDashCharacter::DealHeavyDamage()
 			AEnemyCharacter* Enemy = Cast<AEnemyCharacter>(Res.Actor);
 			if (Enemy)
 			{
-				Enemy->TakeDamage(WeaponDamage * 1.2f);
+				Enemy->TakeDamage(30);
 			}
 		}
 	}
