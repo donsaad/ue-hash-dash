@@ -38,6 +38,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void TakeDamage(float Damage);
-	class AAIController* AIController;
-	class UBlackboardComponent* BlackboardComp;
+	class AEnemyAIController* AIController;
+	//class UBlackboardComponent* BlackboardComp;
 };

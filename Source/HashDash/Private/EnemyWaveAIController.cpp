@@ -29,7 +29,7 @@ void AEnemyWaveAIController::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("No BlackBoard Asset was set in AIC BP!"));
+		UE_LOG(LogTemp, Error, TEXT("No BlackBoard Asset was set in WaveAIC BP!"));
 	}
 	if (BTAsset)
 	{
@@ -37,7 +37,7 @@ void AEnemyWaveAIController::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("No BT Asset was set in AIC BP!"));
+		UE_LOG(LogTemp, Error, TEXT("No BT Asset was set in WaveAIC BP!"));
 	}
 }
 

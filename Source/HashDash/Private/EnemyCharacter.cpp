@@ -5,8 +5,9 @@
 #include "HashDashCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "AIModule\Classes\BehaviorTree\BlackboardComponent.h"
-#include "Blueprint/AIBlueprintHelperLibrary.h"
-#include "AIController.h"
+//#include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "EnemyAIController.h"
+//#include "Kismet\GameplayStatics.h"
 
 
 // Sets default values
@@ -27,11 +28,11 @@ void AEnemyCharacter::BeginPlay()
 	{
 		Capsule->OnComponentBeginOverlap.AddDynamic(this, &AEnemyCharacter::OnEnemyBeginOverlap);
 	}
-	AIController = Cast<AAIController>(GetController());
-	if (AIController)
-	{
-		BlackboardComp = UAIBlueprintHelperLibrary::GetBlackboard(AIController->GetPawn()); // cant get BB todo solve
-	}
+	AIController = Cast<AEnemyAIController>(GetController());
+	//if (AIController)
+	//{
+	//	BlackboardComp = UAIBlueprintHelperLibrary::GetBlackboard(AIController->GetPawn()); // cant get BB todo solve
+	//}
 }
 
 void AEnemyCharacter::OnEnemyBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -56,11 +57,11 @@ void AEnemyCharacter::Tick(float DeltaTime)
 	{
 		if (Health < 0)
 		{
-			GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision); // in vain
 			bIsDead = true;
 			GetWorld()->GetTimerManager().SetTimer(DestroyTimerHandle, this, &AEnemyCharacter::DestroySelf, 1);
-			BlackboardComp->SetValueAsInt("CurrentEnemyCount", BlackboardComp->GetValueAsInt("CurrentEnemyCount") - 1);
-			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("%d"), BlackboardComp->GetValueAsInt("CurrentEnemyCount")));
+			AIController->BlackBoardComp->SetValueAsInt("CurrentEnemyCount", AIController->BlackBoardComp->GetValueAsInt("CurrentEnemyCount") - 1);
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("%d"), AIController->BlackBoardComp->GetValueAsInt("CurrentEnemyCount")));
 		}
 	}
 }
