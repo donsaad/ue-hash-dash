@@ -19,6 +19,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	class AEnemyWaveAIController* AIController;
+	TArray<AActor*> CurrentEnemyList;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

@@ -22,8 +22,8 @@ EBTNodeResult::Type USpawnBTTaskNode::ExecuteTask(UBehaviorTreeComponent& OwnerC
 	{
 		FVector SpawnLoc = BBComp->GetValueAsVector(BBSpawnLocKey.SelectedKeyName);
 		GetWorld()->SpawnActor<AEnemyCharacter>(ToBeSpawned, SpawnLoc, FRotator::ZeroRotator);
-		BBComp->SetValueAsInt(BBEnemyNumKey.SelectedKeyName, BBComp->GetValueAsInt(BBEnemyNumKey.SelectedKeyName) - 1);
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("num: %d"), BBComp->GetValueAsInt(BBEnemyNumKey.SelectedKeyName)));
+		BBComp->SetValueAsInt(BBEnemyPerWaveKey.SelectedKeyName, BBComp->GetValueAsInt(BBEnemyPerWaveKey.SelectedKeyName) - 1);
+		BBComp->SetValueAsInt(BBCurrEnemyNumKey.SelectedKeyName, BBComp->GetValueAsInt(BBCurrEnemyNumKey.SelectedKeyName) + 1);
 		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 		return EBTNodeResult::Succeeded;
 	}

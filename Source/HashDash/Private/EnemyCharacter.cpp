@@ -4,6 +4,10 @@
 #include "EnemyCharacter.h"
 #include "HashDashCharacter.h"
 #include "Components/CapsuleComponent.h"
+#include "AIModule\Classes\BehaviorTree\BlackboardComponent.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "AIController.h"
+
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -22,6 +26,11 @@ void AEnemyCharacter::BeginPlay()
 	if (UCapsuleComponent* Capsule = GetCapsuleComponent())
 	{
 		Capsule->OnComponentBeginOverlap.AddDynamic(this, &AEnemyCharacter::OnEnemyBeginOverlap);
+	}
+	AIController = Cast<AAIController>(GetController());
+	if (AIController)
+	{
+		BlackboardComp = UAIBlueprintHelperLibrary::GetBlackboard(AIController->GetPawn()); // cant get BB todo solve
 	}
 }
 
@@ -49,6 +58,8 @@ void AEnemyCharacter::Tick(float DeltaTime)
 		{
 			bIsDead = true;
 			GetWorld()->GetTimerManager().SetTimer(DestroyTimerHandle, this, &AEnemyCharacter::DestroySelf, 1);
+			BlackboardComp->SetValueAsInt("CurrentEnemyCount", BlackboardComp->GetValueAsInt("CurrentEnemyCount") - 1);
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("%d"), BlackboardComp->GetValueAsInt("CurrentEnemyCount")));
 		}
 	}
 }

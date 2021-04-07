@@ -25,7 +25,9 @@ protected:
 	UPROPERTY(EditAnywhere)
 		FBlackboardKeySelector BBSpawnLocKey;
 	UPROPERTY(EditAnywhere)
-		FBlackboardKeySelector BBEnemyNumKey;
+		FBlackboardKeySelector BBEnemyPerWaveKey;
+	UPROPERTY(EditAnywhere)
+		FBlackboardKeySelector BBCurrEnemyNumKey;
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<class AEnemyCharacter> ToBeSpawned;
 };

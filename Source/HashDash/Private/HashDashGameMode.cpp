@@ -17,17 +17,40 @@ AHashDashGameMode::AHashDashGameMode()
 
 }
 
+void AHashDashGameMode::EndGame()
+{
+	if (GameCompletedClass)
+	{
+		GameCompletedWidget = CreateWidget<UUserWidget>(GetWorld(), GameCompletedClass);
+		if (GameCompletedWidget)
+		{
+			GameCompletedWidget->AddToViewport();
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("No Widget class type for game complete was set in game mode blueprint!"));
+	}
+}
+
 void AHashDashGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	MainWidget = CreateWidget<UUserWidget>(GetWorld(), MainWidgetClass);
-	if (MainWidget)
+	Controller = GetWorld()->GetFirstPlayerController();
+	if (Controller)
 	{
-		MainWidget->AddToViewport();
+		FInputModeGameOnly InputMode;
+		Controller->SetInputMode(InputMode);
+		Controller->bShowMouseCursor = false;
+	}
+	MainHudWidget = CreateWidget<UUserWidget>(GetWorld(), MainHudWidgetClass);
+	if (MainHudWidget)
+	{
+		MainHudWidget->AddToViewport();
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("No Widget class type was set in blueprint!"));
+		UE_LOG(LogTemp, Error, TEXT("No Widget class type was set in game mode blueprint!"));
 	}
 }

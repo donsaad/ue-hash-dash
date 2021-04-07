@@ -44,8 +44,5 @@ void AEnemyWaveAIController::BeginPlay()
 void AEnemyWaveAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	//if (NumOfEnemiesToSpawn == 0 && CurrentEnemyList.Num() == 0)
-	//{
-	//	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemyCharacter::StaticClass(), CurrentEnemyList);
-	//}
+
 }
