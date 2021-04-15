@@ -4,9 +4,9 @@
 #include "HashDashCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "AIModule\Classes\BehaviorTree\BlackboardComponent.h"
-//#include "Blueprint/AIBlueprintHelperLibrary.h"
-#include "EnemyAIController.h"
-//#include "Kismet\GameplayStatics.h"
+#include "EnemyWaveManager.h"
+#include "EnemyWaveAIController.h"
+#include "Kismet\GameplayStatics.h"
 #include "Components\WidgetComponent.h"
 #include "HealthBarUserWidget.h"
 
@@ -29,7 +29,25 @@ void AEnemyCharacter::BeginPlay()
 	{
 		Capsule->OnComponentBeginOverlap.AddDynamic(this, &AEnemyCharacter::OnEnemyBeginOverlap);
 	}
-	AIController = Cast<AEnemyAIController>(GetController());
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemyWaveManager::StaticClass(), OutActors);
+
+
+	if (OutActors.Num() > 0)
+	{
+		APawn* WaveManager = Cast<AEnemyWaveManager>(OutActors[0]);
+		if (WaveManager)
+		{
+			AIController = Cast<AEnemyWaveAIController>(WaveManager->GetController());
+		}
+		//else {
+		//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("cant cast pawn")));
+		//}
+	}
+	//if (AIController)
+	//{
+	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("got it")));
+	//}
+
 	//if (AIController)
 	//{
 	//	BlackboardComp = UAIBlueprintHelperLibrary::GetBlackboard(AIController->GetPawn()); // cant get BB todo solve
@@ -67,11 +85,11 @@ void AEnemyCharacter::Tick(float DeltaTime)
 	{
 		if (Health < 0)
 		{
-			GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision); // in vain
+			//GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision); // in vain
 			bIsDead = true;
 			GetWorld()->GetTimerManager().SetTimer(DestroyTimerHandle, this, &AEnemyCharacter::DestroySelf, 1);
 			AIController->BlackBoardComp->SetValueAsInt("CurrentEnemyCount", AIController->BlackBoardComp->GetValueAsInt("CurrentEnemyCount") - 1);
-			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("%d"), AIController->BlackBoardComp->GetValueAsInt("CurrentEnemyCount")));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("%d"), AIController->BlackBoardComp->GetValueAsInt("CurrentEnemyCount")));
 		}
 	}
 }

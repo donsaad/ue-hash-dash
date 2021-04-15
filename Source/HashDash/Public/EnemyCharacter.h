@@ -39,8 +39,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void TakeDamage(float Damage);
-	class AEnemyAIController* AIController;
+	class AEnemyWaveAIController* AIController;
 	//class UBlackboardComponent* BlackboardComp;
 	class UWidgetComponent* HealthWidgetComp;
 	class UHealthBarUserWidget* HealthBarUI;
+	TArray<AActor*> OutActors;
 };
